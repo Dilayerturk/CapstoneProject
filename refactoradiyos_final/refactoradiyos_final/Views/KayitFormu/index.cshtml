@@ -1,4 +1,5 @@
-﻿@model refactoradiyos_final.Models.GeneralModel
+﻿@using Microsoft.AspNet.Identity
+@model refactoradiyos_final.Models.GeneralModel
 @{
     ViewBag.Title = "index";
     Layout = null;
@@ -16,9 +17,11 @@
     <link rel="shortcut icon" href="assets/images/favicon.ico">
 
     <title>Adiyos - Smart Diabetes Mellitus Management Tool</title>
+    <link href="~/plugins/sweet-alert/sweetalert2.min.css" rel="stylesheet" type="text/css" />
 
     <link href="~/plugins/switchery/switchery.min.css" rel="stylesheet" />
     <link href="~/plugins/jquery-circliful/css/jquery.circliful.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="~/plugins/morris/morris.css">
 
     <link href="~/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="~/assets/css/icons.css" rel="stylesheet" type="text/css">
@@ -39,7 +42,7 @@
 
 <body class="fixed-left">
 
-    @using (Html.BeginForm("create", "KayitFormu", FormMethod.Post))
+    @using (Html.BeginForm("create", "KayitFormu", FormMethod.Post, new {enctype="multipart/form-data"}))
     {
         <!-- Begin page -->
         <div id="wrapper">
@@ -146,7 +149,7 @@
 
 
                                 <!-- item-->
-                                <a href="pages-login.html" class="dropdown-item notify-item">
+                                <a href="@Url.Action("Logout","User")" class="dropdown-item notify-item">
                                     <i class="mdi mdi-logout"></i> <span>Çıkış</span>
                                 </a>
 
@@ -208,7 +211,7 @@
                                     <i class="ti-user"></i><span>Doktorlar</span>
                                 </a>
                             </li>
-
+                            
                             <li class="has_sub">
                                 <a href="javascript:void(0);" class="waves-effect waves-primary">
                                     <i class="ti-stats-up"></i><span>Analiz Tabloları</span>
@@ -218,6 +221,7 @@
                                     <li>@Html.ActionLink("Genel Analiz", "index", "ChartChartlist")</li>
                                 </ul>
                             </li>
+
                         </ul>
                         <div class="clearfix"></div>
                     </div>
@@ -245,6 +249,11 @@
                             Hasta kayıt formu daha önce sisteme kayıt olmamış hasta
                             bilgilerini kaydetmek için oluşturulmuştur.
                         </p>
+
+                        <h5 style="color:red">@Html.ViewData["Message"]</h5>
+                   
+                        <h5 style="color:green">@Html.ViewData["MessageSuccess"] </h5>
+
                         <div class="row">
                             <div class="col-12">
                                 <div class="card-box">
@@ -323,28 +332,22 @@
                                             </div>
                                         </div>
 
-                                        <div class="row">
-                                            <div class="card-box">
-                                                <div class="text-right">
-                                                    <p class="text-muted m-b-25 font-13">
-                                                        Formları doldurduktan sonra kaydet
-                                                        butonuna tıklayınız.
-                                                    </p>
 
-                                                    <button type="button"
-                                                            class="btn btn-dark btn-custom waves-effect w-md waves-light m-b-5">
-                                                        Kapat
-                                                    </button>
 
-                                                    <button type="submit"
-                                                            class="btn btn-success btn-custom waves-effect w-md waves-light m-b-5"
-                                                            onclick="checkLength()">
-                                                        Kaydet
-                                                    </button>
-                                                </div>
+                                        <div class="container-fluid text-right">
+                                            <div class="row">
+                                                <footer class="pull-right">
+                                                    <div class="text-right">
+                                                        <button type="submit"
+                                                                class="btn btn-success btn-custom waves-effect w-md waves-light m-b-5">
+
+                                                            Kaydet
+                                                        </button>
+                                                    </div>
+                                                </footer>
                                             </div>
-
                                         </div>
+
                                     </div>
                                     <!-- end row -->
                                     <!-- Modal 1 Start-->
@@ -370,7 +373,8 @@
                                                                     Başvuru
                                                                     Tarihi
                                                                 </label>
-                                                                @Html.TextBoxFor(m => m.patient_Info.AppDate, new { @class = "form-control" })
+                                                                @Html.TextBoxFor(m => m.patient_Info.AppDate, new { @class = "form-control", type = "date", name = "date" })
+
                                                             </div>
                                                         </div>
                                                         <div class="col-md-2">
@@ -380,6 +384,7 @@
                                                                     No
                                                                 </label>
                                                                 @Html.TextBoxFor(m => m.patient_Info.FileNo, new { id = "textbox", @class = "form-control" })
+                                                                @Html.ValidationMessageFor(m => m.patient_Info.FileNo, "", new { @class = "text-danger" })
                                                             </div>
                                                         </div>
                                                     </div>
@@ -439,7 +444,7 @@
                                                                     Doğum
                                                                     Tarihi
                                                                 </label>
-                                                                @Html.TextBoxFor(m => m.patient_Info.BirthDate, new { @class = "form-control" })
+                                                                @Html.TextBoxFor(m => m.patient_Info.BirthDate, new { @class = "form-control" , type = "date", name = "date" })
                                                             </div>
                                                         </div>
 
@@ -495,7 +500,7 @@
                                                                     Başlangıç
                                                                     Tarihi
                                                                 </label>
-                                                                @Html.TextBoxFor(m => m.diabetes_Info.StartingDate, new { @class = "form-control" })
+                                                                @Html.TextBoxFor(m => m.diabetes_Info.StartingDate, new { @class = "form-control", type = "date", name = "date" })
                                                             </div>
                                                         </div>
 
@@ -763,9 +768,6 @@
 
 
 
-
-
-
                                                     <h4 class="modal-title">Medikal Geçmiş</h4>
 
                                                     <div class="form-group row">
@@ -786,8 +788,6 @@
                                                             @Html.TextAreaFor(m => m.medical_History.MajorDisease, new { @class = "form-control" })
                                                         </div>
                                                     </div>
-
-
 
                                                 </div>
 
@@ -1749,21 +1749,21 @@
 
                                                 </div>
                                                 <div class="form-group row">
-                                                    <label class="col-2 col-form-label">eGFR</label>
+                                                    @Html.LabelFor(m => m.other_Endocrine_System.eGFR, new { @class = "form-control" })
                                                     <div class="col-10">
-                                                        <input type="file" class="form-control">
+                                                        <input type="file" name="eGFRFile">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    <label class="col-2 col-form-label">EKG</label>
+                                                    @Html.LabelFor(m => m.other_Endocrine_System.EKG, new { @class = "form-control" })
                                                     <div class="col-10">
-                                                        <input type="file" class="form-control">
+                                                        <input type="file" name="EKGFile">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    <label class="col-2 col-form-label">EKO</label>
+                                                    @Html.LabelFor(m => m.other_Endocrine_System.EKO, new { @class = "form-control" })
                                                     <div class="col-10">
-                                                        <input type="file" class="form-control">
+                                                        <input type="file" name="EKOFile">
                                                     </div>
                                                 </div>
                                             </div>
@@ -1823,7 +1823,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-8 col-form-label">Kontrol Tarihi</label>
                                                     <div class="col-10">
-                                                        @Html.TextBoxFor(m => m.decision_After_Evaluation.ControlDate, new { @class = "form-control" })
+                                                        @Html.TextBoxFor(m => m.decision_After_Evaluation.ControlDate, new { @class = "form-control", type = "date", name = "date" })
                                                     </div>
                                                 </div>
 
@@ -2346,7 +2346,7 @@
 
 
 
-
+         
 
 
 
@@ -2363,177 +2363,19 @@
         <!-- ============================================================== -->
         <!-- End Right content here -->
         <!-- ============================================================== -->
-        <!-- Right Sidebar -->
-        <div class="side-bar right-bar">
-            <div class="">
-                <ul class="nav nav-tabs tabs-bordered nav-justified">
-                    <li class="nav-item">
-                        <a href="#home-2" class="nav-link active" data-toggle="tab" aria-expanded="false">
-                            Activity
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#messages-2" class="nav-link" data-toggle="tab" aria-expanded="true">
-                            Settings
-                        </a>
-                    </li>
-                </ul>
-                <div class="tab-content">
-                    <div class="tab-pane fade show active" id="home-2">
-                        <div class="timeline-2">
-                            <div class="time-item">
-                                <div class="item-info">
-                                    <small class="text-muted">5 minutes ago</small>
-                                    <p>
-                                        <strong><a href="#" class="text-info">John Doe</a></strong> Uploaded a
-                                        photo
-                                        <strong>"DSC000586.jpg"</strong>
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div class="time-item">
-                                <div class="item-info">
-                                    <small class="text-muted">30 minutes ago</small>
-                                    <p><a href="" class="text-info">Lorem</a> commented your post.</p>
-                                    <p>
-                                        <em>
-                                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-                                            laoreet
-                                            tellus ut tincidunt euismod. "
-                                        </em>
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div class="time-item">
-                                <div class="item-info">
-                                    <small class="text-muted">59 minutes ago</small>
-                                    <p>
-                                        <a href="" class="text-info">Jessi</a> attended a meeting with<a href="#"
-                                                                                                         class="text-success">
-                                            John
-                                            Doe
-                                        </a>.
-                                    </p>
-                                    <p>
-                                        <em>
-                                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-                                            laoreet
-                                            tellus ut tincidunt euismod. "
-                                        </em>
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div class="time-item">
-                                <div class="item-info">
-                                    <small class="text-muted">1 hour ago</small>
-                                    <p>
-                                        <strong><a href="#" class="text-info">John Doe</a></strong>Uploaded 2 new
-                                        photos
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div class="time-item">
-                                <div class="item-info">
-                                    <small class="text-muted">3 hours ago</small>
-                                    <p><a href="" class="text-info">Lorem</a> commented your post.</p>
-                                    <p>
-                                        <em>
-                                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-                                            laoreet
-                                            tellus ut tincidunt euismod. "
-                                        </em>
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div class="time-item">
-                                <div class="item-info">
-                                    <small class="text-muted">5 hours ago</small>
-                                    <p>
-                                        <a href="" class="text-info">Jessi</a> attended a meeting with<a href="#"
-                                                                                                         class="text-success">
-                                            John
-                                            Doe
-                                        </a>.
-                                    </p>
-                                    <p>
-                                        <em>
-                                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-                                            laoreet
-                                            tellus ut tincidunt euismod. "
-                                        </em>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="tab-pane" id="messages-2">
-
-                        <div class="row m-t-20">
-                            <div class="col-8">
-                                <h5 class="m-0 font-15">Notifications</h5>
-                                <p class="text-muted m-b-0"><small>Do you need them?</small></p>
-                            </div>
-                            <div class="col-4 text-right">
-                                <input type="checkbox" checked data-plugin="switchery" data-color="#3bafda"
-                                       data-size="small" />
-                            </div>
-                        </div>
-
-                        <div class="row m-t-20">
-                            <div class="col-8">
-                                <h5 class="m-0 font-15">API Access</h5>
-                                <p class="m-b-0 text-muted"><small>Enable/Disable access</small></p>
-                            </div>
-                            <div class="col-4 text-right">
-                                <input type="checkbox" checked data-plugin="switchery" data-color="#3bafda"
-                                       data-size="small" />
-                            </div>
-                        </div>
-
-                        <div class="row m-t-20">
-                            <div class="col-8">
-                                <h5 class="m-0 font-15">Auto Updates</h5>
-                                <p class="m-b-0 text-muted"><small>Keep up to date</small></p>
-                            </div>
-                            <div class="col-4 text-right">
-                                <input type="checkbox" checked data-plugin="switchery" data-color="#3bafda"
-                                       data-size="small" />
-                            </div>
-                        </div>
-
-                        <div class="row m-t-20">
-                            <div class="col-8">
-                                <h5 class="m-0 font-15">Online Status</h5>
-                                <p class="m-b-0 text-muted"><small>Show your status to all</small></p>
-                            </div>
-                            <div class="col-4 text-right">
-                                <input type="checkbox" checked data-plugin="switchery" data-color="#3bafda"
-                                       data-size="small" />
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- /Right-bar -->
-
-
-        <!-- END wrapper -->
+    
 
 
     }
+    
 
-    <script>
-        var resizefunc = [];
-    </script>
+
+
+
+<script>
+    var resizefunc = [];
+</script>
+
 
     <!-- Plugins  -->
     <script src="~/assets/js/jquery.min.js"></script>
@@ -2553,484 +2395,471 @@
     <script src="~/plugins/waypoints/lib/jquery.waypoints.min.js"></script>
     <script src="~/plugins/counterup/jquery.counterup.min.js"></script>
 
-    <!-- circliful Chart -->
-    <script src="~/plugins/jquery-circliful/js/jquery.circliful.min.js"></script>
-    <script src="~/plugins/jquery-sparkline/jquery.sparkline.min.js"></script>
-
-    <!-- skycons -->
-    <script src="~/plugins/skyicons/skycons.min.js" type="text/javascript"></script>
 
     <!-- Page js  -->
     <script src="~/assets/pages/jquery.dashboard.js"></script>
 
-    <!-- Custom main Js -->
+    <!-- Sweet Alert Js  -->
+    <script src="../plugins/sweet-alert/sweetalert2.min.js"></script>
+    <script src="assets/pages/jquery.sweet-alert.init.js"></script>
+
+
+<!-- Custom main Js -->
     <script src="~/assets/js/jquery.core.js"></script>
     <script src="~/assets/js/jquery.app.js"></script>
 
 
 
     <!-- Custom Sigara Js -->
-    <script>
+<script>
 
-       window.onload = function () {
+    window.onload = function () {
 
 
         
-            (function () {
-                document.getElementById("a").onclick = function () {
-
-                    checkClickedCheckBoxTrue("a", "b")
+        (function () {
+            document.getElementById("a").onclick = function () {
+
+                checkClickedCheckBoxTrue("a", "b")
 
-                };
-            })();
-            (function () {
-                document.getElementById("b").onclick = function () {
-
-                    checkClickedCheckBoxTrue("b", "a")
-
-                };
-            })();
-          (function () {
-                document.getElementById("NonAlcohol").onclick = function () {
-
-                    checkClickedCheckBoxTrue("NonAlcohol", "bırakmısAlcohol")
-
-                };
-            })();
-            (function () {
-                document.getElementById("bırakmısAlcohol").onclick = function () {
-
-                    checkClickedCheckBoxTrue("bırakmısAlcohol", "NonAlcohol")
-
-                };
-            })();
-            (function () {
-                document.getElementById("RetinopatiVar").onclick = function () {
-
-                    checkClickedCheckBoxTrue("RetinopatiVar", "RetinopatiYok")
-
-                };
-            })();
-            (function () {
-                document.getElementById("RetinopatiYok").onclick = function () {
-
-                    checkClickedCheckBoxTrue("RetinopatiYok", "RetinopatiVar")
-
-                };
-            })();
-            (function () {
-                document.getElementById("NefropatiVar").onclick = function () {
-
-                    checkClickedCheckBoxTrue("NefropatiVar", "NefropatiYok")
-
-                };
-            })();
-            (function () {
-                document.getElementById("NefropatiYok").onclick = function () {
-
-                    checkClickedCheckBoxTrue("NefropatiYok", "NefropatiVar")
-
-                };
-            })();
-            (function () {
-                document.getElementById("DislipidemiVar").onclick = function () {
-
-                    checkClickedCheckBoxTrue("DislipidemiVar", "DislipidemiYok")
-                };
-            })();
-            (function () {
-                document.getElementById("DislipidemiYok").onclick = function () {
-
-                    checkClickedCheckBoxTrue("DislipidemiYok", "DislipidemiVar")
-
-                };
-            })();
-            (function () {
-                document.getElementById("KAHVar").onclick = function () {
-
-                    checkClickedCheckBoxTrue("KAHVar", "KAHYok")
-                };
-            })();
-            (function () {
-                document.getElementById("KAHYok").onclick = function () {
-
-                    checkClickedCheckBoxTrue("KAHYok", "KAHVar")
-                };
-            })();
-
-            (function () {
-                document.getElementById("PAHVar").onclick = function () {
-
-                    checkClickedCheckBoxTrue("PAHVar", "PAHYok")
-                };
-            })();
-            (function () {
-                document.getElementById("PAHYok").onclick = function () {
-
-                    checkClickedCheckBoxTrue("PAHYok", "PAHVar")
-                };
-            })();
-            (function () {
-                document.getElementById("DiabetesFootVar").onclick = function () {
-
-                    checkClickedCheckBoxTrue("DiabetesFootVar", "DiabetesFootYok")
-                };
-            })();
-            (function () {
-                document.getElementById("DiabetesFootYok").onclick = function () {
-
-                    checkClickedCheckBoxTrue("DiabetesFootYok", "DiabetesFootVar")
-                };
-            })();
-            (function () {
-                document.getElementById("AmputasyonVar").onclick = function () {
-
-                    checkClickedCheckBoxTrue("AmputasyonVar", "DiabetesFootYok")
-                };
-            })();
-            (function () {
-                document.getElementById("AmputasyonYok").onclick = function () {
-
-                    checkClickedCheckBoxTrue("AmputasyonYok", "AmputasyonVar")
-                };
-            })();
-            (function () {
-                document.getElementById("CharcotVar").onclick = function () {
+            };
+        })();
+        (function () {
+            document.getElementById("b").onclick = function () {
+
+                checkClickedCheckBoxTrue("b", "a")
+
+            };
+        })();
+        (function () {
+            document.getElementById("NonAlcohol").onclick = function () {
+
+                checkClickedCheckBoxTrue("NonAlcohol", "bırakmısAlcohol")
+
+            };
+        })();
+        (function () {
+            document.getElementById("bırakmısAlcohol").onclick = function () {
+
+                checkClickedCheckBoxTrue("bırakmısAlcohol", "NonAlcohol")
+
+            };
+        })();
+        (function () {
+            document.getElementById("RetinopatiVar").onclick = function () {
+
+                checkClickedCheckBoxTrue("RetinopatiVar", "RetinopatiYok")
+
+            };
+        })();
+        (function () {
+            document.getElementById("RetinopatiYok").onclick = function () {
+
+                checkClickedCheckBoxTrue("RetinopatiYok", "RetinopatiVar")
+
+            };
+        })();
+        (function () {
+            document.getElementById("NefropatiVar").onclick = function () {
+
+                checkClickedCheckBoxTrue("NefropatiVar", "NefropatiYok")
+
+            };
+        })();
+        (function () {
+            document.getElementById("NefropatiYok").onclick = function () {
+
+                checkClickedCheckBoxTrue("NefropatiYok", "NefropatiVar")
+
+            };
+        })();
+        (function () {
+            document.getElementById("DislipidemiVar").onclick = function () {
+
+                checkClickedCheckBoxTrue("DislipidemiVar", "DislipidemiYok")
+            };
+        })();
+        (function () {
+            document.getElementById("DislipidemiYok").onclick = function () {
+
+                checkClickedCheckBoxTrue("DislipidemiYok", "DislipidemiVar")
+
+            };
+        })();
+        (function () {
+            document.getElementById("KAHVar").onclick = function () {
+
+                checkClickedCheckBoxTrue("KAHVar", "KAHYok")
+            };
+        })();
+        (function () {
+            document.getElementById("KAHYok").onclick = function () {
+
+                checkClickedCheckBoxTrue("KAHYok", "KAHVar")
+            };
+        })();
+
+        (function () {
+            document.getElementById("PAHVar").onclick = function () {
+
+                checkClickedCheckBoxTrue("PAHVar", "PAHYok")
+            };
+        })();
+        (function () {
+            document.getElementById("PAHYok").onclick = function () {
+
+                checkClickedCheckBoxTrue("PAHYok", "PAHVar")
+            };
+        })();
+        (function () {
+            document.getElementById("DiabetesFootVar").onclick = function () {
+
+                checkClickedCheckBoxTrue("DiabetesFootVar", "DiabetesFootYok")
+            };
+        })();
+        (function () {
+            document.getElementById("DiabetesFootYok").onclick = function () {
+
+                checkClickedCheckBoxTrue("DiabetesFootYok", "DiabetesFootVar")
+            };
+        })();
+        (function () {
+            document.getElementById("AmputasyonVar").onclick = function () {
+
+                checkClickedCheckBoxTrue("AmputasyonVar", "DiabetesFootYok")
+            };
+        })();
+        (function () {
+            document.getElementById("AmputasyonYok").onclick = function () {
+
+                checkClickedCheckBoxTrue("AmputasyonYok", "AmputasyonVar")
+            };
+        })();
+        (function () {
+            document.getElementById("CharcotVar").onclick = function () {
+
+                checkClickedCheckBoxTrue("CharcotVar", "CharcotYok")
+            };
+        })();
+        (function () {
+            document.getElementById("CharcotYok").onclick = function () {
+
+                checkClickedCheckBoxTrue("CharcotYok", "CharcotVar")
+            };
+        })();
+        (function () {
+            document.getElementById("HypertensionVar").onclick = function () {
+
+                checkClickedCheckBoxTrue("HypertensionVar", "HypertensionYok")
+            };
+        })();
+        (function () {
+            document.getElementById("HypertensionYok").onclick = function () {
+
+                checkClickedCheckBoxTrue("HypertensionYok", "HypertensionVar")
+            };
+        })();
+        (function () {
+            document.getElementById("DiabetesEduVar").onclick = function () {
+
+                checkClickedCheckBoxTrue("DiabetesEduVar", "DiabetesEduYok")
+            };
+        })();
+        (function () {
+            document.getElementById("DiabetesEduYok").onclick = function () {
+
+                checkClickedCheckBoxTrue("DiabetesEduYok", "DiabetesEduVar")
+            };
+        })();
+        (function () {
+            document.getElementById("TBTDuzenli").onclick = function () {
+
+                checkClickedCheckBoxTrue("TBTDuzenli", "TBTDuzensiz","TBTUymuyor")
+            };
+        })();
+        (function () {
+            document.getElementById("TBTDuzensiz").onclick = function () {
+
+                checkClickedCheckBoxTrue("TBTDuzensiz", "TBTDuzenli","TBTUymuyor")
+            };
+        })();
+        (function () {
+            document.getElementById("TBTUymuyor").onclick = function () {
+
+                checkClickedCheckBoxTrue("TBTUymuyor", "TBTDuzenli","TBTDuzensiz")
+            };
+        })();
+        (function () {
+            document.getElementById("ExerciseDuzenli").onclick = function () {
+
+                checkClickedCheckBoxTrue("ExerciseDuzenli", "ExerciseDuzensiz","ExerciseUymuyor")
+            };
+        })();
+        (function () {
+            document.getElementById("ExerciseDuzensiz").onclick = function () {
+
+                checkClickedCheckBoxTrue("ExerciseDuzensiz", "ExerciseDuzenli","ExerciseUymuyor")
+            };
+        })();
+        (function () {
+            document.getElementById("ExerciseUymuyor").onclick = function () {
+
+                checkClickedCheckBoxTrue("ExerciseUymuyor", "ExerciseDuzenli","ExerciseDuzensiz")
+            };
+        })();
+        (function () {
+            document.getElementById("SMBGVar").onclick = function () {
+
+                checkClickedCheckBoxTrue("SMBGVar", "SMBGYok")
+            };
+        })();
+        (function () {
+            document.getElementById("SMBGYok").onclick = function () {
+
+                checkClickedCheckBoxTrue("SMBGYok", "SMBGVar")
+            };
+        })();
+
+
+
+
+    };
 
-                    checkClickedCheckBoxTrue("CharcotVar", "CharcotYok")
-                };
-            })();
-            (function () {
-                document.getElementById("CharcotYok").onclick = function () {
 
-                    checkClickedCheckBoxTrue("CharcotYok", "CharcotVar")
-                };
-            })();
-           (function () {
-                document.getElementById("HypertensionVar").onclick = function () {
-
-                    checkClickedCheckBoxTrue("HypertensionVar", "HypertensionYok")
-                };
-            })();
-            (function () {
-                document.getElementById("HypertensionYok").onclick = function () {
-
-                    checkClickedCheckBoxTrue("HypertensionYok", "HypertensionVar")
-                };
-            })();
-            (function () {
-                document.getElementById("DiabetesEduVar").onclick = function () {
-
-                    checkClickedCheckBoxTrue("DiabetesEduVar", "DiabetesEduYok")
-                };
-            })();
-            (function () {
-                document.getElementById("DiabetesEduYok").onclick = function () {
-
-                    checkClickedCheckBoxTrue("DiabetesEduYok", "DiabetesEduVar")
-                };
-            })();
-             (function () {
-                document.getElementById("TBTDuzenli").onclick = function () {
-
-                    checkClickedCheckBoxTrue("TBTDuzenli", "TBTDuzensiz","TBTUymuyor")
-                };
-            })();
-            (function () {
-                document.getElementById("TBTDuzensiz").onclick = function () {
-
-                    checkClickedCheckBoxTrue("TBTDuzensiz", "TBTDuzenli","TBTUymuyor")
-                };
-            })();
-            (function () {
-                document.getElementById("TBTUymuyor").onclick = function () {
-
-                    checkClickedCheckBoxTrue("TBTUymuyor", "TBTDuzenli","TBTDuzensiz")
-                };
-            })();
-            (function () {
-                document.getElementById("ExerciseDuzenli").onclick = function () {
-
-                    checkClickedCheckBoxTrue("ExerciseDuzenli", "ExerciseDuzensiz","ExerciseUymuyor")
-                };
-            })();
-            (function () {
-                document.getElementById("ExerciseDuzensiz").onclick = function () {
-
-                    checkClickedCheckBoxTrue("ExerciseDuzensiz", "ExerciseDuzenli","ExerciseUymuyor")
-                };
-            })();
-            (function () {
-                document.getElementById("ExerciseUymuyor").onclick = function () {
-
-                    checkClickedCheckBoxTrue("ExerciseUymuyor", "ExerciseDuzenli","ExerciseDuzensiz")
-                };
-            })();
-            (function () {
-                document.getElementById("SMBGVar").onclick = function () {
-
-                    checkClickedCheckBoxTrue("SMBGVar", "SMBGYok")
-                };
-            })();
-            (function () {
-                document.getElementById("SMBGYok").onclick = function () {
-
-                    checkClickedCheckBoxTrue("SMBGYok", "SMBGVar")
-                };
-            })();
-
-
-
-
-        };
-
-
-
-
-
-
-
-
-
-
-        function checkClickedCheckBoxTrue(a, b) {
-
-            var check = document.getElementById(a)
-
-            if (check.checked) {
-                check.checked = true
-            }
-            else {
-                check.checked = false
-            }
-
-            document.getElementById(b).checked = false
-
-            return false;
-        }
-
-        function checkClickedCheckBoxTrue(NonAlcohol, bırakmısAlcohol) {
-
-            var check = document.getElementById(NonAlcohol)
-
-            if (check.checked) {
-                check.checked = true
-            }
-            else {
-                check.checked = false
-            }
-
-            document.getElementById(bırakmısAlcohol).checked = false
-
-            return false;
-        }
-
-         function checkClickedCheckBoxTrue(RetinopatiVar, RetinopatiYok) {
-
-            var check = document.getElementById(RetinopatiVar)
-
-            if (check.checked) {
-                check.checked = true
-            }
-            else {
-                check.checked = false
-            }
-
-            document.getElementById(RetinopatiYok).checked = false
-
-            return false;
-        }
-
-        function checkClickedCheckBoxTrue(NefropatiVar, NefropatiYok) {
-
-
-            var check = document.getElementById(NefropatiVar)
-
-            if (check.checked) {
-                check.checked = true
-            }
-            else {
-                check.checked = false
-            }
-
-            document.getElementById(NefropatiYok).checked = false
-
-            return false;
-        }
-
-        function checkClickedCheckBoxTrue(DislipidemiVar, DislipidemiYok) {
-            var check = document.getElementById(DislipidemiVar)
-
-            if (check.checked) {
-                check.checked = true
-            }
-            else {
-                check.checked = false
-            }
-
-            document.getElementById(DislipidemiYok).checked = false
-            return false;
-        }
-
-        function checkClickedCheckBoxTrue(KAHVar, KAHYok) {
-            var check = document.getElementById(KAHVar)
-
-            if (check.checked) {
-                check.checked = true
-            }
-            else {
-                check.checked = false
-            }
-            document.getElementById(KAHYok).checked = false
-            return false;
-        }
-
-         function checkClickedCheckBoxTrue(PAHVar, PAHYok) {
-            var check = document.getElementById(PAHVar)
-
-            if (check.checked) {
-                check.checked = true
-            }
-            else {
-                check.checked = false
-            }
-            document.getElementById(PAHYok).checked = false
-            return false;
-        }
-
-         function checkClickedCheckBoxTrue(DiabetesFootVar, DiabetesFootYok) {
-            var check = document.getElementById(DiabetesFootVar)
-
-            if (check.checked) {
-                check.checked = true
-            }
-            else {
-                check.checked = false
-            }
-            document.getElementById(DiabetesFootYok).checked = false
-            return false;
-        }
-
-        function checkClickedCheckBoxTrue(AmputasyonVar, AmputasyonYok) {
-            var check = document.getElementById(AmputasyonVar)
-
-            if (check.checked) {
-                check.checked = true
-            }
-            else {
-                check.checked = false
-            }
-
-            document.getElementById(AmputasyonYok).checked = false
-            return false;
-        }
-
-        function checkClickedCheckBoxTrue(CharcotVar, CharcotYok) {
-            var check = document.getElementById(CharcotVar)
-
-            if (check.checked) {
-                check.checked = true
-            }
-            else {
-                check.checked = false
-            }
-
-            document.getElementById(CharcotYok).checked = false
-            return false;
-        }
-
-        function checkClickedCheckBoxTrue(HypertensionVar, HypertensionYok) {
-            var check = document.getElementById(HypertensionVar)
-
-            if (check.checked) {
-                check.checked = true
-            }
-            else {
-                check.checked = false
-            }
-
-            document.getElementById(HypertensionYok).checked = false
-            return false;
-        }
-
-        function checkClickedCheckBoxTrue(DiabetesEduVar, DiabetesEduYok) {
-            var check = document.getElementById(DiabetesEduVar)
-
-            if (check.checked) {
-                check.checked = true
-            }
-            else {
-                check.checked = false
-            }
-
-            document.getElementById(DiabetesEduYok).checked = false
-            return false;
-        }
-
-         function checkClickedCheckBoxTrue(TBTDuzenli, TBTDuzensiz,TBTUymuyor) {
-            var check = document.getElementById(TBTDuzenli)
-
-            if (check.checked) {
-                check.checked = true
-            }
-            else {
-                check.checked = false
-            }
-
-            document.getElementById(TBTDuzensiz).checked = false
-            document.getElementById(TBTUymuyor).checked = false
-            return false;
-        }
-
-        function checkClickedCheckBoxTrue(ExerciseDuzenli, ExerciseDuzensiz,ExerciseUymuyor) {
-            var check = document.getElementById(ExerciseDuzenli)
-
-            if (check.checked) {
-                check.checked = true
-            }
-            else {
-                check.checked = false
-            }
-
-            document.getElementById(ExerciseDuzensiz).checked = false
-            document.getElementById(ExerciseUymuyor).checked = false
-            return false;
-        }
-
-
-
-
-
-
-
-
-
-        function checkClickedCheckBoxTrue(SMBGVar, SMBGYok) {
-            var check = document.getElementById(SMBGVar)
-
-            if (check.checked) {
-                check.checked = true
-            }
-            else {
-                check.checked = false
-            }
-            document.getElementById(SMBGYok).checked = false
-            return false;
-        }
         
-    </script>
 
-    <script>
-        function checkLength(){
-            var textbox = document.getElementById("textbox");
-            if(textbox.value.length == 11){
-                alert("Veriler başarıyla kaydedildi");
-                }
-            else{
-            alert("Lütfen TC Kimlik Numarasını 11 haneli giriniz...")
-            }
+    function checkClickedCheckBoxTrue(a, b) {
+
+        var check = document.getElementById(a)
+
+        if (check.checked) {
+            check.checked = true
         }
-    </script>
+        else {
+            check.checked = false
+        }
+
+        document.getElementById(b).checked = false
+
+        return false;
+    }
+
+    function checkClickedCheckBoxTrue(NonAlcohol, bırakmısAlcohol) {
+
+        var check = document.getElementById(NonAlcohol)
+
+        if (check.checked) {
+            check.checked = true
+        }
+        else {
+            check.checked = false
+        }
+
+        document.getElementById(bırakmısAlcohol).checked = false
+
+        return false;
+    }
+
+    function checkClickedCheckBoxTrue(RetinopatiVar, RetinopatiYok) {
+
+        var check = document.getElementById(RetinopatiVar)
+
+        if (check.checked) {
+            check.checked = true
+        }
+        else {
+            check.checked = false
+        }
+
+        document.getElementById(RetinopatiYok).checked = false
+
+        return false;
+    }
+
+    function checkClickedCheckBoxTrue(NefropatiVar, NefropatiYok) {
+
+
+        var check = document.getElementById(NefropatiVar)
+
+        if (check.checked) {
+            check.checked = true
+        }
+        else {
+            check.checked = false
+        }
+
+        document.getElementById(NefropatiYok).checked = false
+
+        return false;
+    }
+
+    function checkClickedCheckBoxTrue(DislipidemiVar, DislipidemiYok) {
+        var check = document.getElementById(DislipidemiVar)
+
+        if (check.checked) {
+            check.checked = true
+        }
+        else {
+            check.checked = false
+        }
+
+        document.getElementById(DislipidemiYok).checked = false
+        return false;
+    }
+
+    function checkClickedCheckBoxTrue(KAHVar, KAHYok) {
+        var check = document.getElementById(KAHVar)
+
+        if (check.checked) {
+            check.checked = true
+        }
+        else {
+            check.checked = false
+        }
+        document.getElementById(KAHYok).checked = false
+        return false;
+    }
+
+    function checkClickedCheckBoxTrue(PAHVar, PAHYok) {
+        var check = document.getElementById(PAHVar)
+
+        if (check.checked) {
+            check.checked = true
+        }
+        else {
+            check.checked = false
+        }
+        document.getElementById(PAHYok).checked = false
+        return false;
+    }
+
+    function checkClickedCheckBoxTrue(DiabetesFootVar, DiabetesFootYok) {
+        var check = document.getElementById(DiabetesFootVar)
+
+        if (check.checked) {
+            check.checked = true
+        }
+        else {
+            check.checked = false
+        }
+        document.getElementById(DiabetesFootYok).checked = false
+        return false;
+    }
+
+    function checkClickedCheckBoxTrue(AmputasyonVar, AmputasyonYok) {
+        var check = document.getElementById(AmputasyonVar)
+
+        if (check.checked) {
+            check.checked = true
+        }
+        else {
+            check.checked = false
+        }
+
+        document.getElementById(AmputasyonYok).checked = false
+        return false;
+    }
+
+    function checkClickedCheckBoxTrue(CharcotVar, CharcotYok) {
+        var check = document.getElementById(CharcotVar)
+
+        if (check.checked) {
+            check.checked = true
+        }
+        else {
+            check.checked = false
+        }
+
+        document.getElementById(CharcotYok).checked = false
+        return false;
+    }
+
+    function checkClickedCheckBoxTrue(HypertensionVar, HypertensionYok) {
+        var check = document.getElementById(HypertensionVar)
+
+        if (check.checked) {
+            check.checked = true
+        }
+        else {
+            check.checked = false
+        }
+
+        document.getElementById(HypertensionYok).checked = false
+        return false;
+    }
+
+    function checkClickedCheckBoxTrue(DiabetesEduVar, DiabetesEduYok) {
+        var check = document.getElementById(DiabetesEduVar)
+
+        if (check.checked) {
+            check.checked = true
+        }
+        else {
+            check.checked = false
+        }
+
+        document.getElementById(DiabetesEduYok).checked = false
+        return false;
+    }
+
+    function checkClickedCheckBoxTrue(TBTDuzenli, TBTDuzensiz,TBTUymuyor) {
+        var check = document.getElementById(TBTDuzenli)
+
+        if (check.checked) {
+            check.checked = true
+        }
+        else {
+            check.checked = false
+        }
+
+        document.getElementById(TBTDuzensiz).checked = false
+        document.getElementById(TBTUymuyor).checked = false
+        return false;
+    }
+
+    function checkClickedCheckBoxTrue(ExerciseDuzenli, ExerciseDuzensiz,ExerciseUymuyor) {
+        var check = document.getElementById(ExerciseDuzenli)
+
+        if (check.checked) {
+            check.checked = true
+        }
+        else {
+            check.checked = false
+        }
+
+        document.getElementById(ExerciseDuzensiz).checked = false
+        document.getElementById(ExerciseUymuyor).checked = false
+        return false;
+    }
+
+        
+    function checkClickedCheckBoxTrue(SMBGVar, SMBGYok) {
+        var check = document.getElementById(SMBGVar)
+
+        if (check.checked) {
+            check.checked = true
+        }
+        else {
+            check.checked = false
+        }
+        document.getElementById(SMBGYok).checked = false
+        return false;
+    }
+
+</script>
+
+<script>
+    $(function() {
+        $(".datepicker").datepicker({
+            dateFormat: "dd/mm/yyyy",
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "-10:+10"
+            changeDay: true,
+    });
+    });
+</script>
+
 
 </body>
 

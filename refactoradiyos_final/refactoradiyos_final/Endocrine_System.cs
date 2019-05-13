@@ -14,7 +14,8 @@ namespace refactoradiyos_final
     
     public partial class Endocrine_System
     {
-        public int IDNo { get; set; }
+        public long ID { get; set; }
+        public string IDNo { get; set; }
         public string Thyroid { get; set; }
         public string Obesity { get; set; }
         public string Acanthosis { get; set; }

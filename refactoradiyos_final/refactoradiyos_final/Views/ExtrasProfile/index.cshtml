@@ -1,6 +1,8 @@
-﻿
+﻿@model refactoradiyos_final.Models.UserModel
+
 @{
     Layout = null;
+    ViewBag.Title = "Profile";
 }
 
 <!DOCTYPE html>
@@ -27,7 +29,8 @@
 
 
 <body class="fixed-left">
-
+@using (Html.BeginForm("Profile", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
     <!-- Begin page -->
     <div id="wrapper">
 
@@ -215,35 +218,24 @@
                             <div class="text-center card-box">
                                 <div class="member-card">
                                     <div class="thumb-xl member-thumb m-b-10 center-block">
-                                        <img src="~/assets/images/users/avatar-1.jpg" class="rounded-circle img-thumbnail" alt="profile-image">
+                                        <img src="assets/images/users/avatar-1.jpg" class="rounded-circle img-thumbnail" alt="profile-image">
                                     </div>
 
                                     <div class="">
                                         <h5 class="m-b-5">Mark McKnight</h5>
-                                        <p class="text-muted">@@doctor</p>
+                                        <p class="text-muted"></p>
                                     </div>
 
                                     <div class="text-left m-t-40">
-                                        <p class="text-muted font-13"><strong>İsim Soyisim :</strong> <span class="m-l-15">Mark A. McKnight</span></p>
+                                        <p class="text-muted font-13"><strong>Kullanıcı Adı:</strong> <span class="m-l-15">Mark A. McKnight</span></p>
 
                                         <p class="text-muted font-13"><strong>Telefon :</strong><span class="m-l-15">(123) 123 1234</span></p>
 
                                         <p class="text-muted font-13"><strong>E-posta :</strong> <span class="m-l-15">coderthemes@gmail.com</span></p>
 
-                                        <p class="text-muted font-13"><strong>Konum :</strong> <span class="m-l-15">USA</span></p>
+
                                     </div>
 
-                                    <ul class="social-links list-inline m-t-30">
-                                        <li class="list-inline-item">
-                                            <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Facebook"><i class="fa fa-facebook"></i></a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Twitter"><i class="fa fa-twitter"></i></a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Skype"><i class="fa fa-skype"></i></a>
-                                        </li>
-                                    </ul>
 
                                 </div>
 
@@ -258,118 +250,57 @@
                             <div class="">
                                 <div class="card-box">
                                     <ul class="nav nav-tabs tabs-bordered">
-                                        <li class="nav-item">
-                                            <a href="#home" data-toggle="tab" aria-expanded="false" class="nav-link active">
-                                                Hakkımda
-                                            </a>
-                                        </li>
+
 
                                         <li class="nav-item">
-                                            <a href="#settings" data-toggle="tab" aria-expanded="false" class="nav-link">
+                                            <a href="#settings" data-toggle="tab" aria-expanded="false" class="nav-link active">
                                                 Ayarlar
                                             </a>
                                         </li>
                                     </ul>
                                     <div class="tab-content">
-                                        <div class="tab-pane active" id="home">
-                                            <p class="m-b-5">
-                                                Hi I'm Johnathn Deo,has been the industry's standard dummy text ever
-                                                since the 1500s, when an unknown printer took a galley of type.
-                                                Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.
-                                                In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.
-                                                Nullam dictum felis eu pede mollis pretium. Integer tincidunt.Cras
-                                                dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend
-                                                tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend
-                                                ac, enim.
-                                            </p>
-
-                                            <div class="m-t-30">
-                                                <h5>Experience</h5>
-
-                                                <div class=" p-t-10">
-                                                    <h6 class="text-primary m-b-5">Lead designer / Developer</h6>
-                                                    <p class="">websitename.com</p>
-                                                    <p><b>2010-2015</b></p>
-
-                                                    <p class="text-muted font-13 m-b-0">
-                                                        Lorem Ipsum is simply dummy text
-                                                        of the printing and typesetting industry. Lorem Ipsum has
-                                                        been the industry's standard dummy text ever since the
-                                                        1500s, when an unknown printer took a galley of type and
-                                                        scrambled it to make a type specimen book.
-                                                    </p>
-                                                </div>
-
-                                                <hr>
-
-                                                <div class="">
-                                                    <h6 class="text-primary m-b-5">Senior Graphic Designer</h6>
-                                                    <p class="">coderthemes.com</p>
-                                                    <p><b>2007-2009</b></p>
-
-                                                    <p class="text-muted font-13">
-                                                        Lorem Ipsum is simply dummy text
-                                                        of the printing and typesetting industry. Lorem Ipsum has
-                                                        been the industry's standard dummy text ever since the
-                                                        1500s, when an unknown printer took a galley of type and
-                                                        scrambled it to make a type specimen book.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="tab-pane" id="settings">
+                                        <div class="tab-pane active" id="settings">
                                             <form role="form">
                                                 <div class="form-group">
-                                                    <label for="FullName">İsim Soyisim</label>
-                                                    <input type="text" value="John Doe" id="FullName" class="form-control">
+                                                    @Html.LabelFor(model => model.DoctorName, htmlAttributes: new { @class = "control-label col-12" })
+                                                    <input type="text" id="FullName" class="form-control">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="Email">E-posta</label>
-                                                    <input type="email" value="first.last@example.com" id="Email" class="form-control">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="Username">TC Kimlik No</label>
-                                                    <input type="text" value="john" id="Username" class="form-control">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="Password">Şifre</label>
-                                                    <input type="password" placeholder="6 - 15 Characters" id="Password" class="form-control">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="RePassword">Yeni Şifre</label>
-                                                    <input type="password" placeholder="6 - 15 Characters" id="RePassword" class="form-control">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="RePassword">Konum</label>
-                                                    <input type="password" placeholder="6 - 15 Characters" id="RePassword" class="form-control">
+                                                    @Html.LabelFor(model => model.DoctorEmail, htmlAttributes: new { @class = "control-label col-12" })
+                                                    <input type="email" id="Email" class="form-control">
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="form-group">
-                                                        <label for="RePassword">Telefon</label>
+                                                        @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-12" })
                                                         <input type="password" placeholder="6 - 15 Characters" id="RePassword" class="form-control">
                                                     </div>
-                                                    <label for="AboutMe">Hakkımda</label>
-                                                    <textarea style="height: 125px" id="AboutMe" class="form-control">Loren gypsum dolor sit mate, consecrate disciplining lit, tied diam nonunion nib modernism tincidunt it Loretta dolor manga Amalia erst volute. Ur wise denim ad minim venial, quid nostrum exercise ration perambulator suspicious cortisol nil it applique ex ea commodore consequent.</textarea>
+                                                    <div class="form-group">
+                                                        @Html.LabelFor(model => model.Doctorpwd, htmlAttributes: new { @class = "control-label col-12" })
+                                                        <input type="password" placeholder="6 - 15 Characters" id="Password" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        @Html.LabelFor(model => model.Doctorepwd, htmlAttributes: new { @class = "control-label col-12" })
+                                                        <input type="password" placeholder="6 - 15 Characters" id="RePassword" class="form-control">
+                                                    </div>
+
+
+
                                                 </div>
-                                                <button class="btn btn-primary waves-effect waves-light w-md" type="submit">Save</button>
+                                                <button class="btn btn-primary waves-effect waves-light w-md" type="submit">Kaydet</button>
                                             </form>
+
                                         </div>
                                     </div>
                                 </div>
+
+
                             </div>
-
-                        </div> <!-- end col -->
+                        </div>
                     </div>
-                    <!-- end row -->
 
-                </div>
-                <!-- end container -->
+                </div> <!-- end col -->
             </div>
-            <!-- end content -->
-            <footer class="footer">
-                2019 © Adiyos <span class="hide-phone">- adiyos.com</span>
-            </footer>
+            <!-- end row -->
 
         </div>
         <!-- ============================================================== -->
@@ -492,8 +423,8 @@
 
     </div>
     <!-- END wrapper -->
-
-
+    
+}
 
     <script>
             var resizefunc = [];

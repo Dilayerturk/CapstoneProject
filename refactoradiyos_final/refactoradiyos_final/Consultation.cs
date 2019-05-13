@@ -14,7 +14,8 @@ namespace refactoradiyos_final
     
     public partial class Consultation
     {
-        public int IDNo { get; set; }
+        public long ID { get; set; }
+        public string IDNo { get; set; }
         public string Nurse { get; set; }
         public string Nutritionist { get; set; }
         public string Eye { get; set; }

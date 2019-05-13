@@ -7,8 +7,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.ComponentModel.DataAnnotations;
-
 namespace refactoradiyos_final
 {
     using System;
@@ -16,8 +14,8 @@ namespace refactoradiyos_final
     
     public partial class Patient_Info
     {
-
-        public int IDNo { get; set; }
+        public long ID { get; set; }
+        public string IDNo { get; set; }
         public string AppDate { get; set; }
         public string FileNo { get; set; }
         public string Name { get; set; }

@@ -117,7 +117,7 @@
                             </a>
 
                             <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
+                            <a href="@Url.Action("Logout","User")" class="dropdown-item notify-item">
                                 <i class="mdi mdi-logout"></i> <span>Çıkış</span>
                             </a>
 
@@ -209,8 +209,6 @@
                         <div class="col-sm-12">
 
                             <div class="card-box">
-
-
                                 <table class="table table-striped add-edit-table" id="datatable-editable">
                                     <thead>
                                         <tr>
@@ -234,10 +232,9 @@
                                             <td>@item.AppDate</td>
                                       
                                             <td class="actions">
-                                                <a href="~/KayitFormuEdit/index?pId=@item.IDNo" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fa fa-pencil"></i></a>
-                                                <a href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Duplicate"><i class="fa fa-sticky-note"></i></a>
-                                                <a href="#" class="hidden on-editing save-row" data-toggle="tooltip" data-placement="top" title="" data-original-title="Share"><i class="fa fa-share-square-o"></i></a>
-                                                <a href="#" class="on-default remove-row" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="fa fa-trash-o"></i></a>
+                                                <a href="~/KayitFormuEdit/index?pId=@item.ID" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fa fa-pencil"></i></a>
+                                                <a href="~/TakipFormu/index?pId=@item.ID" data-toggle="tooltip" data-placement="top" title="" data-original-title="Duplicate"><i class="fa fa-sticky-note"></i></a>
+                                                <a href="~/TablesEditable/Delete?pId=@item.ID"  data-toggle="tooltip"  data-placement="top" title="" data-original-title="Delete"><i class="fa fa-trash-o"></i></a>
                                             </td>
                                         </tr>
                                         }

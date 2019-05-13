@@ -14,7 +14,8 @@ namespace refactoradiyos_final
     
     public partial class Neurological_System
     {
-        public int IDNo { get; set; }
+        public long ID { get; set; }
+        public string IDNo { get; set; }
         public string DiyapozonRight { get; set; }
         public string DiyapozonLeft { get; set; }
         public string MonofilamentRight { get; set; }

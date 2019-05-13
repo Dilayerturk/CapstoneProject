@@ -14,7 +14,8 @@ namespace refactoradiyos_final
     
     public partial class Urine_Spot
     {
-        public int IDNo { get; set; }
+        public long ID { get; set; }
+        public string IDNo { get; set; }
         public bool TProtein { get; set; }
         public bool Mikroalbümin { get; set; }
         public bool BUN { get; set; }

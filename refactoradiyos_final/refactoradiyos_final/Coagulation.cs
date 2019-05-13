@@ -14,7 +14,8 @@ namespace refactoradiyos_final
     
     public partial class Coagulation
     {
-        public int IDNo { get; set; }
+        public long ID { get; set; }
+        public string IDNo { get; set; }
         public bool ProtrombinZamanıINR { get; set; }
         public bool AktivitePTT_aPTT_ { get; set; }
         public bool Fibronojen { get; set; }

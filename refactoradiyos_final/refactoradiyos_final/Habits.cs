@@ -14,7 +14,8 @@ namespace refactoradiyos_final
     
     public partial class Habits
     {
-        public int IDNo { get; set; }
+        public long ID { get; set; }
+        public string IDNo { get; set; }
         public bool NonCigarette { get; set; }
         public bool BırakmışCigarette { get; set; }
         public string iciyorCigarette { get; set; }

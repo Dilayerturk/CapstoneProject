@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.ComponentModel.DataAnnotations;
 
 namespace refactoradiyos_final.Models
 {
@@ -34,6 +35,7 @@ namespace refactoradiyos_final.Models
         public Obstetrik_History obstetrik_History { get; set; }
         public Other_Endocrine_System other_Endocrine_System { get; set; }
         public Other_Systems other_Systems { get; set; }
+
         public Patient_Info patient_Info { get; set; }
         public Physical_Examination physical_Examination { get; set; }
         public Tumor_Markers tumor_Markers { get; set; }
@@ -74,6 +76,7 @@ namespace refactoradiyos_final.Models
             this.biochemistry.IDNo = this.patient_Info.IDNo;
 
         }
+
 
         public GeneralModel()
         {

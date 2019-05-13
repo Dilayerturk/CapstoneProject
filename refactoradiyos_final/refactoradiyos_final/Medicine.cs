@@ -14,7 +14,8 @@ namespace refactoradiyos_final
     
     public partial class Medicine
     {
-        public int IDNo { get; set; }
+        public long ID { get; set; }
+        public string IDNo { get; set; }
         public string DiabetesDiagnosis { get; set; }
         public string MedicineName { get; set; }
         public string KanSekeri { get; set; }

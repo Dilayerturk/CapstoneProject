@@ -14,7 +14,8 @@ namespace refactoradiyos_final
     
     public partial class Hematoloji
     {
-        public int IDNo { get; set; }
+        public long ID { get; set; }
+        public string IDNo { get; set; }
         public bool Hemogram { get; set; }
         public bool SedimantasyonHızı_ESR_ { get; set; }
     }

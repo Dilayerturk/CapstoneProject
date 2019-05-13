@@ -14,7 +14,8 @@ namespace refactoradiyos_final
     
     public partial class Other_Systems
     {
-        public int IDNo { get; set; }
+        public long ID { get; set; }
+        public string IDNo { get; set; }
         public string UrogenitalSystem { get; set; }
         public string RespiratorySystem { get; set; }
         public string GastrointestinalSystem { get; set; }

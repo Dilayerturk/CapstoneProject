@@ -14,7 +14,8 @@ namespace refactoradiyos_final
     
     public partial class Tumor_Markers
     {
-        public int IDNo { get; set; }
+        public long ID { get; set; }
+        public string IDNo { get; set; }
         public bool AFP { get; set; }
         public bool CEA { get; set; }
         public bool CA125 { get; set; }

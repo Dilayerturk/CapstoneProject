@@ -14,7 +14,8 @@ namespace refactoradiyos_final
     
     public partial class Medical_History
     {
-        public int IDNo { get; set; }
+        public long ID { get; set; }
+        public string IDNo { get; set; }
         public string Operation { get; set; }
         public string Infection { get; set; }
         public string MajorDisease { get; set; }

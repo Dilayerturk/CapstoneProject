@@ -14,7 +14,8 @@ namespace refactoradiyos_final
     
     public partial class Drug_Layouts
     {
-        public int IDNo { get; set; }
+        public long ID { get; set; }
+        public string IDNo { get; set; }
         public bool Digoksin { get; set; }
         public bool Lityum { get; set; }
     }

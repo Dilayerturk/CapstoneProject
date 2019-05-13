@@ -14,7 +14,8 @@ namespace refactoradiyos_final
     
     public partial class Cardiovascular_System
     {
-        public int IDNo { get; set; }
+        public long ID { get; set; }
+        public string IDNo { get; set; }
         public string SistolikRight { get; set; }
         public string SistolikLeft { get; set; }
         public string DiyastolikRight { get; set; }

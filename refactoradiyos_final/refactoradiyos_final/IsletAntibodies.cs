@@ -14,7 +14,8 @@ namespace refactoradiyos_final
     
     public partial class IsletAntibodies
     {
-        public int IDNo { get; set; }
+        public long ID { get; set; }
+        public string IDNo { get; set; }
         public string ICA { get; set; }
         public string Anti_GAD { get; set; }
         public string IA_2 { get; set; }

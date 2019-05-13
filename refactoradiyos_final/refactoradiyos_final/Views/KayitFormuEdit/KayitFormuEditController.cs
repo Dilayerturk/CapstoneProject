@@ -1,6 +1,7 @@
 ﻿using refactoradiyos_final.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -9,43 +10,43 @@ namespace refactoradiyos_final.Views.KayitFormuEdit
 {
     public class KayitFormuEditController : Controller
     {
-        NewAdiyosEntities2 ADIYOSEntities1 = new NewAdiyosEntities2();
+        dbadiyoscapstoneEntities ADIYOSEntities1 = new dbadiyoscapstoneEntities();
 
 
-        public ActionResult Index(int pId)
+        public ActionResult Index(long pId, HttpPostedFileBase file)
         {
             GeneralModel generalModel = new GeneralModel();
-            generalModel.patient_Info = ADIYOSEntities1.Patient_Info.Single(pat => pat.IDNo == pId);
-            generalModel.bos = ADIYOSEntities1.BOS.Single(b => b.IDNo == pId);
-            generalModel.c24 = ADIYOSEntities1.C24_Hour_Urine.Single(b => b.IDNo == pId);
-            generalModel.biochemistry = ADIYOSEntities1.Biochemistry.Single(b => b.IDNo == pId);
-            generalModel.cardiovascular_System = ADIYOSEntities1.Cardiovascular_System.Single(b => b.IDNo == pId);
-            generalModel.clinic_Chemistry = ADIYOSEntities1.Clinic_Chemistry.Single(b => b.IDNo == pId);
-            generalModel.coagulation = ADIYOSEntities1.Coagulation.Single(b => b.IDNo == pId);
-            generalModel.complication = ADIYOSEntities1.Complications.Single(b => b.IDNo == pId);
-            generalModel.consultation = ADIYOSEntities1.Consultation.Single(b => b.IDNo == pId);
-            generalModel.decision_After_Evaluation = ADIYOSEntities1.Decision_After_Evaluation.Single(b => b.IDNo == pId);
-            generalModel.diabetes_Education = ADIYOSEntities1.Diabetes_Education.Single(b => b.IDNo == pId);
-            generalModel.diabetes_Info = ADIYOSEntities1.Diabetes_Info.Single(b => b.IDNo == pId);
-            generalModel.drug_Layouts = ADIYOSEntities1.Drug_Layouts.Single(b => b.IDNo == pId);
-            generalModel.endocrine = ADIYOSEntities1.Endocrine_System.Single(b => b.IDNo == pId);
-            generalModel.habit = ADIYOSEntities1.Habits.Single(b => b.IDNo == pId);
-            generalModel.hematoloji = ADIYOSEntities1.Hematoloji.Single(b => b.IDNo == pId);
-            generalModel.hemoglobin = ADIYOSEntities1.Hemoglobin.Single(b => b.IDNo == pId);
-            generalModel.history_Family = ADIYOSEntities1.History_Family.Single(b => b.IDNo == pId);
-            generalModel.hormone = ADIYOSEntities1.Hormone.Single(b => b.IDNo == pId);
-            generalModel.isletAntibody = ADIYOSEntities1.IsletAntibodies.Single(b => b.IDNo == pId);
-            generalModel.medical_History = ADIYOSEntities1.Medical_History.Single(b => b.IDNo == pId);
-            generalModel.medicine = ADIYOSEntities1.Medicine.Single(b => b.IDNo == pId);
-            generalModel.medics_Used = ADIYOSEntities1.Medics_Used.Single(b => b.IDNo == pId);
-            generalModel.neurological_System = ADIYOSEntities1.Neurological_System.Single(b => b.IDNo == pId);
-            generalModel.obstetrik_History = ADIYOSEntities1.Obstetrik_History.Single(b => b.IDNo == pId);
-            generalModel.other_Endocrine_System = ADIYOSEntities1.Other_Endocrine_System.Single(b => b.IDNo == pId);
-            generalModel.other_Systems = ADIYOSEntities1.Other_Systems.Single(b => b.IDNo == pId);
-            generalModel.physical_Examination = ADIYOSEntities1.Physical_Examination.Single(b => b.IDNo == pId);
-            generalModel.tumor_Markers = ADIYOSEntities1.Tumor_Markers.Single(b => b.IDNo == pId);
-            generalModel.urine = ADIYOSEntities1.Urine.Single(b => b.IDNo == pId);
-            generalModel.urine_Spot = ADIYOSEntities1.Urine_Spot.Single(b => b.IDNo == pId);
+            generalModel.patient_Info = ADIYOSEntities1.Patient_Info.Single(pat => pat.ID == pId);
+            generalModel.bos = ADIYOSEntities1.BOS.Single(b => b.ID == pId);
+            generalModel.c24 = ADIYOSEntities1.C24_Hour_Urine.Single(b => b.ID == pId);
+            generalModel.biochemistry = ADIYOSEntities1.Biochemistry.Single(b => b.ID == pId);
+            generalModel.cardiovascular_System = ADIYOSEntities1.Cardiovascular_System.Single(b => b.ID == pId);
+            generalModel.clinic_Chemistry = ADIYOSEntities1.Clinic_Chemistry.Single(b => b.ID == pId);
+            generalModel.coagulation = ADIYOSEntities1.Coagulation.Single(b => b.ID == pId);
+            generalModel.complication = ADIYOSEntities1.Complications.Single(b => b.ID == pId);
+            generalModel.consultation = ADIYOSEntities1.Consultation.Single(b => b.ID == pId);
+            generalModel.decision_After_Evaluation = ADIYOSEntities1.Decision_After_Evaluation.Single(b => b.ID == pId);
+            generalModel.diabetes_Education = ADIYOSEntities1.Diabetes_Education.Single(b => b.ID == pId);
+            generalModel.diabetes_Info = ADIYOSEntities1.Diabetes_Info.Single(b => b.ID == pId);
+            generalModel.drug_Layouts = ADIYOSEntities1.Drug_Layouts.Single(b => b.ID == pId);
+            generalModel.endocrine = ADIYOSEntities1.Endocrine_System.Single(b => b.ID == pId);
+            generalModel.habit = ADIYOSEntities1.Habits.Single(b => b.ID == pId);
+            generalModel.hematoloji = ADIYOSEntities1.Hematoloji.Single(b => b.ID == pId);
+            generalModel.hemoglobin = ADIYOSEntities1.Hemoglobin.Single(b => b.ID == pId);
+            generalModel.history_Family = ADIYOSEntities1.History_Family.Single(b => b.ID == pId);
+            generalModel.hormone = ADIYOSEntities1.Hormone.Single(b => b.ID == pId);
+            generalModel.isletAntibody = ADIYOSEntities1.IsletAntibodies.Single(b => b.ID == pId);
+            generalModel.medical_History = ADIYOSEntities1.Medical_History.Single(b => b.ID == pId);
+            generalModel.medicine = ADIYOSEntities1.Medicine.Single(b => b.ID == pId);
+            generalModel.medics_Used = ADIYOSEntities1.Medics_Used.Single(b => b.ID == pId);
+            generalModel.neurological_System = ADIYOSEntities1.Neurological_System.Single(b => b.ID == pId);
+            generalModel.obstetrik_History = ADIYOSEntities1.Obstetrik_History.Single(b => b.ID == pId);
+            generalModel.other_Endocrine_System = ADIYOSEntities1.Other_Endocrine_System.Single(b => b.ID == pId);
+            generalModel.other_Systems = ADIYOSEntities1.Other_Systems.Single(b => b.ID == pId);
+            generalModel.physical_Examination = ADIYOSEntities1.Physical_Examination.Single(b => b.ID == pId);
+            generalModel.tumor_Markers = ADIYOSEntities1.Tumor_Markers.Single(b => b.ID == pId);
+            generalModel.urine = ADIYOSEntities1.Urine.Single(b => b.ID == pId);
+            generalModel.urine_Spot = ADIYOSEntities1.Urine_Spot.Single(b => b.ID == pId);
 
             return View(generalModel);
         
@@ -80,12 +81,56 @@ namespace refactoradiyos_final.Views.KayitFormuEdit
             ADIYOSEntities1.Medics_Used.Add(pModel.medics_Used);
             ADIYOSEntities1.Neurological_System.Add(pModel.neurological_System);
             ADIYOSEntities1.Obstetrik_History.Add(pModel.obstetrik_History);
+            /*
+                        HttpPostedFileBase ekg = Request.Files["EKGFile"];
+
+                        if(ekg != null) { 
+
+                        string fileName = Path.GetFileNameWithoutExtension(ekg.FileName);
+                        string extension = Path.GetExtension(ekg.FileName);
+                        pModel.other_Endocrine_System.EKG = "~/Patient-Images/" + fileName + extension;
+                        fileName = Path.Combine(Server.MapPath("~/Patient-Images/"), fileName + extension);
+                        ekg.SaveAs(fileName);
+                        ADIYOSEntities1.Other_Endocrine_System.Add(pModel.other_Endocrine_System);
+                        ADIYOSEntities1.Entry(pModel.other_Endocrine_System).State = System.Data.Entity.EntityState.Modified;
+                        }
+
+                        HttpPostedFileBase eko = Request.Files["EKOFile"];
+
+                        if (eko != null)
+                        {
+                            string fileName2 = Path.GetFileNameWithoutExtension(eko.FileName);
+                            string extension2 = Path.GetExtension(eko.FileName);
+                            pModel.other_Endocrine_System.EKO = "~/Patient-Images/" + fileName2 + extension2;
+                            fileName2 = Path.Combine(Server.MapPath("~/Patient-Images/"), fileName2 + extension2);
+                            eko.SaveAs(fileName2);
+                            ADIYOSEntities1.Other_Endocrine_System.Add(pModel.other_Endocrine_System);
+                            ADIYOSEntities1.Entry(pModel.other_Endocrine_System).State = System.Data.Entity.EntityState.Modified;
+                        }
+
+
+                        HttpPostedFileBase eGFR = Request.Files["eGFRFile"];
+
+                        if (eGFR != null)
+                        {
+                            string fileName3 = Path.GetFileNameWithoutExtension(eGFR.FileName);
+                            string extension3 = Path.GetExtension(eGFR.FileName);
+                            pModel.other_Endocrine_System.eGFR = "~/Patient-Images/" + fileName3 + extension3;
+                            fileName3 = Path.Combine(Server.MapPath("~/Patient-Images/"), fileName3 + extension3);
+                            eGFR.SaveAs(fileName3);
+                            ADIYOSEntities1.Other_Endocrine_System.Add(pModel.other_Endocrine_System);
+                            ADIYOSEntities1.Entry(pModel.other_Endocrine_System).State = System.Data.Entity.EntityState.Modified;
+                        }
+                     */
+
             ADIYOSEntities1.Other_Endocrine_System.Add(pModel.other_Endocrine_System);
             ADIYOSEntities1.Other_Systems.Add(pModel.other_Systems);
             ADIYOSEntities1.Physical_Examination.Add(pModel.physical_Examination);
             ADIYOSEntities1.Tumor_Markers.Add(pModel.tumor_Markers);
             ADIYOSEntities1.Urine.Add(pModel.urine);
             ADIYOSEntities1.Urine_Spot.Add(pModel.urine_Spot);
+
+
 
 
             ADIYOSEntities1.Entry(pModel.patient_Info).State = System.Data.Entity.EntityState.Modified;
@@ -121,9 +166,35 @@ namespace refactoradiyos_final.Views.KayitFormuEdit
             ADIYOSEntities1.Entry(pModel.urine_Spot).State = System.Data.Entity.EntityState.Modified;
 
 
-            
-            ADIYOSEntities1.SaveChanges();
-            return RedirectToAction("Index", "KayitFormuEdit" ,new { pId = pModel.patient_Info.IDNo });
+
+
+
+            try
+            {
+                ADIYOSEntities1.SaveChanges();
+            }
+            catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+            {
+                Exception raise = dbEx;
+                foreach (var validationErrors in dbEx.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        string message = string.Format("{0}:{1}",
+                            validationErrors.Entry.Entity.ToString(),
+                            validationError.ErrorMessage);
+                        // raise a new exception nesting
+                        // the current instance as InnerException
+                        raise = new InvalidOperationException(message, raise);
+                    }
+                }
+                throw raise;
+            }
+
+
+            return RedirectToAction("Index", "KayitFormuEdit" ,new { pId = pModel.patient_Info.ID });
         }
+
+    
     }
 }

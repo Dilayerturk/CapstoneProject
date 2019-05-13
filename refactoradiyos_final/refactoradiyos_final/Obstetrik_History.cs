@@ -14,7 +14,8 @@ namespace refactoradiyos_final
     
     public partial class Obstetrik_History
     {
-        public int IDNo { get; set; }
+        public long ID { get; set; }
+        public string IDNo { get; set; }
         public string Period { get; set; }
         public string Unsteady { get; set; }
         public string Pregnant { get; set; }

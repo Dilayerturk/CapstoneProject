@@ -14,7 +14,8 @@ namespace refactoradiyos_final
     
     public partial class Diabetes_Info
     {
-        public int IDNo { get; set; }
+        public long ID { get; set; }
+        public string IDNo { get; set; }
         public string StartingDate { get; set; }
         public string InitialShape { get; set; }
         public string Gripe { get; set; }

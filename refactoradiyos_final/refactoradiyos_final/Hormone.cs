@@ -14,7 +14,8 @@ namespace refactoradiyos_final
     
     public partial class Hormone
     {
-        public int IDNo { get; set; }
+        public long ID { get; set; }
+        public string IDNo { get; set; }
         public bool T3 { get; set; }
         public bool T4 { get; set; }
         public bool FT3 { get; set; }

@@ -14,7 +14,8 @@ namespace refactoradiyos_final
     
     public partial class Other_Endocrine_System
     {
-        public int IDNo { get; set; }
+        public long ID { get; set; }
+        public string IDNo { get; set; }
         public string TSH__IU_ml_ { get; set; }
         public string FT4__pmol_ml_ { get; set; }
         public string AntiTPO__IU_ml_ { get; set; }

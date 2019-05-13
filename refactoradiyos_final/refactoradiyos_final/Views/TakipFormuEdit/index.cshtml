@@ -39,7 +39,7 @@
 
 <body class="fixed-left">
     @model refactoradiyos_final.Models.GeneralModel
-    @using (Html.BeginForm("create", "TakipFormuEdit", FormMethod.Post, new { @class = "my_form" }))
+    @using (Html.BeginForm("create", "TakipFormuEdit", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <!-- Begin page -->
     <div id="wrapper">
@@ -1403,24 +1403,24 @@
                                                         </div>
 
                                                     </div>
-                                                    <div class="form-group row">
-                                                        <label class="col-2 col-form-label">eGFR</label>
-                                                        <div class="col-10">
-                                                            <input type="file" class="form-control">
-                                                        </div>
+                                                <div class="form-group row">
+                                                    @Html.LabelFor(m=> m.other_Endocrine_System.eGFR,new {@class = "form-control"})
+                                                    <div class="col-10">
+                                                        <input type="file" name="eGFRFile">
                                                     </div>
-                                                    <div class="form-group row">
-                                                        <label class="col-2 col-form-label">EKG</label>
-                                                        <div class="col-10">
-                                                            <input type="file" class="form-control">
-                                                        </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    @Html.LabelFor(m=> m.other_Endocrine_System.EKG,new {@class = "form-control"})
+                                                    <div class="col-10">
+                                                        <input type="file" name="EKGFile">
                                                     </div>
-                                                    <div class="form-group row">
-                                                        <label class="col-2 col-form-label">EKO</label>
-                                                        <div class="col-10">
-                                                            <input type="file" class="form-control">
-                                                        </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    @Html.LabelFor(m=> m.other_Endocrine_System.EKO,new {@class = "form-control"})
+                                                    <div class="col-10">
+                                                        <input type="file" name="EKOFile">
                                                     </div>
+                                                </div>
                                                 </div>
                                                 <!-- Modal 3 Biyokimya End-->
 

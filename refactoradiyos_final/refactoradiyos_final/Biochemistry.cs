@@ -14,7 +14,8 @@ namespace refactoradiyos_final
     
     public partial class Biochemistry
     {
-        public int IDNo { get; set; }
+        public long ID { get; set; }
+        public string IDNo { get; set; }
         public string HbA1c____ { get; set; }
         public string Fruktozamin { get; set; }
         public string AçlıkGlukoz__mg_dl_ { get; set; }

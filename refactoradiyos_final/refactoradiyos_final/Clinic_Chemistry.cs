@@ -14,7 +14,8 @@ namespace refactoradiyos_final
     
     public partial class Clinic_Chemistry
     {
-        public int IDNo { get; set; }
+        public long ID { get; set; }
+        public string IDNo { get; set; }
         public bool Glukoz { get; set; }
         public bool HbA1c { get; set; }
         public bool Fruktozamin { get; set; }

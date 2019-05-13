@@ -14,7 +14,8 @@ namespace refactoradiyos_final
     
     public partial class Urine
     {
-        public int IDNo { get; set; }
+        public long ID { get; set; }
+        public string IDNo { get; set; }
         public string Dansite { get; set; }
         public string Protein { get; set; }
         public string Sediment { get; set; }

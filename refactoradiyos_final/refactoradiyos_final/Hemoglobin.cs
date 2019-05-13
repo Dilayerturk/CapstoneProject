@@ -14,7 +14,8 @@ namespace refactoradiyos_final
     
     public partial class Hemoglobin
     {
-        public int IDNo { get; set; }
+        public long ID { get; set; }
+        public string IDNo { get; set; }
         public string Hb { get; set; }
         public string Hct { get; set; }
         public string Lök { get; set; }

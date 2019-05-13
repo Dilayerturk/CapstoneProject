@@ -14,7 +14,8 @@ namespace refactoradiyos_final
     
     public partial class Complications
     {
-        public int IDNo { get; set; }
+        public long ID { get; set; }
+        public string IDNo { get; set; }
         public bool RetinopatiVar { get; set; }
         public bool RetinopatiYok { get; set; }
         public bool NefropatiVar { get; set; }

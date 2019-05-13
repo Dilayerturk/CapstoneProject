@@ -14,7 +14,8 @@ namespace refactoradiyos_final
     
     public partial class History_Family
     {
-        public int IDNo { get; set; }
+        public long ID { get; set; }
+        public string IDNo { get; set; }
         public string HistoryFamilyType { get; set; }
     }
 }

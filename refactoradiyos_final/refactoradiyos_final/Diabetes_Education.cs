@@ -14,7 +14,8 @@ namespace refactoradiyos_final
     
     public partial class Diabetes_Education
     {
-        public int IDNo { get; set; }
+        public long ID { get; set; }
+        public string IDNo { get; set; }
         public bool DiabetesEduVar { get; set; }
         public bool DiabetesEduYok { get; set; }
         public bool TBTDuzenli { get; set; }

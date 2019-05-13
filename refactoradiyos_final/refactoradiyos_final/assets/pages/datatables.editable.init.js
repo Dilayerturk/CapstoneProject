@@ -1,9 +1,3 @@
-/**
-* Theme: Minton Admin Template
-* Author: Coderthemes
-* Component: Editable
-* 
-*/
 
 
 
@@ -56,8 +50,8 @@
 				    "lengthMenu":     "Show _MENU_ entries",
 				    "loadingRecords": "Loading...",
 				    "processing":     "Processing...",
-				    "search":         "Search:",
-				    "zeroRecords":    "No matching records found",
+				    "search":         "Arama:",
+				    "zeroRecords":    "Eþleþme Bulunamadý",
 				    "paginate": {
 				        "first":      "First",
 				        "last":       "Last",

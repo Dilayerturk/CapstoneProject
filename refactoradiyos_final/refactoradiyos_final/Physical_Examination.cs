@@ -14,7 +14,8 @@ namespace refactoradiyos_final
     
     public partial class Physical_Examination
     {
-        public int IDNo { get; set; }
+        public long ID { get; set; }
+        public string IDNo { get; set; }
         public string Length { get; set; }
         public string BKI { get; set; }
         public string Weigth { get; set; }
